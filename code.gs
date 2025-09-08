@@ -13,9 +13,10 @@ function doGet() {
 /**
  * Appends scanned data to a specific Google Sheet and looks up related information.
  * @param {string} scannedData The data scanned from the QR code.
+ * @param {string} userName The name of the user who scanned the code.
  * @return {object} An object containing a status message, the scanned data, and lookup results.
  */
-function saveData(scannedData) {
+function saveData(scannedData, userName) {
   const SPREADSHEET_ID = '1EBu_H_Dda_ACzj26hTZEOtI6-qbxuLwlqVoB_3lqLdw';
   const RECORD_SHEET_NAME = 'บันทึกเบิก';
   const LOOKUP_SHEET_NAME = 'AvailableLot';
@@ -60,7 +61,7 @@ function saveData(scannedData) {
       }
       const timestamp = new Date();
       const today = Utilities.formatDate(timestamp, spreadsheet.getSpreadsheetTimeZone(), 'yyyy-MM-dd');
-      recordSheet.appendRow([timestamp, scannedData, today]);
+      recordSheet.appendRow([timestamp, scannedData, today, userName]);
       Logger.log('บันทึกข้อมูลเรียบร้อยแล้ว');
 
       // Return an object with all the results

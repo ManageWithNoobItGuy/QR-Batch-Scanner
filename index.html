@@ -93,6 +93,15 @@
   <body>
     <div class="container">
       <h1>สแกน QR Code</h1>
+        <label for="user-name" style="display:block; margin-bottom:10px; color:#334155; font-weight:500;">เลือกชื่อผู้เบิก:</label>
+        <select id="user-name" style="width:100%; padding:10px; border-radius:8px; border:1px solid #cbd5e1; margin-bottom:20px; font-size:1rem;">
+          <option value="หลุน">หลุน</option>
+          <option value="ปาน">ปาน</option>
+          <option value="มิน">มิน</option>
+          <option value="บิว">บิว</option>
+          <option value="ฟิว">ฟิว</option>
+          <option value="คลัง">คลัง</option>
+        </select>
       <div id="video-container">
         <video id="video" playsinline></video>
       </div>
@@ -161,11 +170,12 @@
             // Stop camera immediately after finding a QR code
             stopCamera();
             
+            const userName = document.getElementById('user-name').value;
             // Send the scanned data to the server-side script
             google.script.run
                   .withSuccessHandler(onRecordSuccess)
                   .withFailureHandler(onRecordFailure)
-                  .saveData(code.data);
+                  .saveData(code.data, userName);
             
             return; // Exit the function to prevent further scanning
           } else {
